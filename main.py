@@ -44,6 +44,7 @@ def game_initialize():
 
     # Initialize pygame
     pygame.init()
+    pygame.font.init()
 
     # TODO Preference check and load
 
