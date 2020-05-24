@@ -2,9 +2,11 @@
 import pygame
 import sys
 import random
+import ui_components
 
 # Game Files
 import constants
+import draw
 
 
 def menu_main():
@@ -12,7 +14,54 @@ def menu_main():
 
     menu_running = True
 
-    # TODO Need buttons referencing ui_Button component
+    # Title Address
+    title_x = constants.CAMERA_WIDTH/2
+    title_y = constants.CAMERA_HEIGHT/2
+    title_text = "Working Title: SAINTS"
+
+    # Button Addresses
+    button_y_offset = 40
+    new_game_button_y = title_y + button_y_offset
+    load_game_button_y = new_game_button_y + button_y_offset
+    options_button_y = load_game_button_y + button_y_offset
+    quit_button_y = options_button_y + button_y_offset
+
+    # Buttons referencing ui_Button component
+    new_game_button = ui_components.Button(SURFACE_MAIN,
+                                           (150, 30),
+                                           (title_x, new_game_button_y),
+                                           "New Game",
+                                           constants.COLOR_D_GREY,
+                                           constants.COLOR_GREY,
+                                           constants.COLOR_BLUE,
+                                           constants.COLOR_BLACK)
+
+    load_game_button = ui_components.Button(SURFACE_MAIN,
+                                            (150, 30),
+                                            (title_x, load_game_button_y),
+                                            "Load",
+                                            constants.COLOR_D_GREY,
+                                            constants.COLOR_GREY,
+                                            constants.COLOR_BLUE,
+                                            constants.COLOR_BLACK)
+
+    options_button = ui_components.Button(SURFACE_MAIN,
+                                          (150, 30),
+                                          (title_x, options_button_y),
+                                          "Options",
+                                          constants.COLOR_D_GREY,
+                                          constants.COLOR_GREY,
+                                          constants.COLOR_BLUE,
+                                          constants.COLOR_BLACK)
+
+    quit_button = ui_components.Button(SURFACE_MAIN,
+                                       (150, 30),
+                                       (title_x, quit_button_y),
+                                       "Quit",
+                                       constants.COLOR_D_GREY,
+                                       constants.COLOR_GREY,
+                                       constants.COLOR_BLUE,
+                                       constants.COLOR_BLACK)
 
     while menu_running:
 
@@ -26,9 +75,41 @@ def menu_main():
                 pygame.quit()
                 sys.exit()
 
-        # TODO Button update if statements
+        # Button update if statements
+        if new_game_button.update(game_input):
+            # Start a game_new() and game_main_loop()
+            pass
 
-        # TODO Draw the menu
+        if load_game_button.update(game_input):
+            # Load submenu of saved games, menu_game_load()
+            pass
+
+        if options_button.update(game_input):
+            # Load submenu for game options and preferences, menu_options()
+            pass
+
+        if quit_button.update(game_input):
+            # Quit the game
+            pygame.quit()
+            sys.exit()
+
+        # TODO Update menu with actual background
+        SURFACE_MAIN.fill(constants.COLOR_BLACK)
+
+        # Draw title
+        draw.draw_text(SURFACE_MAIN,
+                       title_text,
+                       constants.FONT_DEBUG_PLACEHOLDER,
+                       (title_x, title_y),
+                       constants.COLOR_BLUE,
+                       bg_color=constants.COLOR_WHITE,
+                       center=True)
+
+        # Draw the buttons
+        new_game_button.draw()
+        load_game_button.draw()
+        options_button.draw()
+        quit_button.draw()
 
         # Update the surface
         pygame.display.update()

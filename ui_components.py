@@ -3,9 +3,10 @@ import pygame
 
 # Game Files
 import constants
+import draw
 
 
-class ui_Button:
+class Button:
     def __init__(self, surface, size, center_coords,
                  button_text=None,
                  color_box_mouseover=None,
@@ -59,10 +60,10 @@ class ui_Button:
     def draw(self):
 
         pygame.draw.rect(self.surface, self.c_c_box, self.rect)
-        if button_text:
-            draw_text(self.surface,
-                      self.button_text,
-                      constants.FONT_DEBUG_PLACEHOLDER,
-                      self.center_coords,
-                      self.c_c_text,
-                      center=True)
+        if self.button_text:
+            draw.draw_text(self.surface,
+                           self.button_text,
+                           constants.FONT_DEBUG_PLACEHOLDER,
+                           self.center_coords,
+                           self.c_c_text,
+                           center=True)
