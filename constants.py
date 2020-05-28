@@ -1,8 +1,18 @@
 # Modules
 import pygame
 
+
 # Font initialize
 pygame.font.init()
+
+# Game Specs
+CELL_WIDTH = 64
+CELL_HEIGHT = 64
+GAME_FPS = 60
+
+# World Map Dimensions
+W_MAP_WIDTH = 2732
+W_MAP_HEIGHT = 1536
 
 # Camera Dimensions
 CAMERA_WIDTH = 1366

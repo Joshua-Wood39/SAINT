@@ -3,10 +3,20 @@ import pygame
 import sys
 import random
 import ui_components
+import gzip
+import pickle
 
 # Game Files
 import constants
 import draw
+import camera
+import assets
+import preferences
+
+
+########################################################################################
+# MENU - MAIN
+########################################################################################
 
 
 def menu_main():
@@ -78,7 +88,9 @@ def menu_main():
         # Button update if statements
         if new_game_button.update(game_input):
             # Start a game_new() and game_main_loop()
-            pass
+            # TODO Stop menu music
+            game_new()
+            game_main_loop()
 
         if load_game_button.update(game_input):
             # Load submenu of saved games, menu_game_load()
@@ -115,11 +127,35 @@ def menu_main():
         pygame.display.update()
 
 
+########################################################################################
+# GAME
+########################################################################################
+
+
+def game_main_loop():
+    '''
+    Loop the Main Game
+    '''
+
+    game_quit = False
+
+    while not game_quit:
+
+        # TODO Handle player input
+
+        # TODO Draw the game
+
+        # TODO Update the display
+
+        # Tick the Clock
+        CLOCK.tick(constants.GAME_FPS)
+
+
 def game_initialize():
     '''
     This will initialize the main window, pygame, and globals
     '''
-    global SURFACE_MAIN
+    global SURFACE_MAIN, SURFACE_WORLD_MAP, PLAYER
     global CLOCK, ASSETS, CAMERA, RANDOM_ENGINE
     global PREFERENCES
 
@@ -127,7 +163,11 @@ def game_initialize():
     pygame.init()
     pygame.font.init()
 
-    # TODO Preference check and load
+    # Preference check and load
+    try:
+        preferences_load()
+    except:
+        PREFERENCES = preferences.struct_Preferences()
 
     # SURFACE_MAIN is the display surface, a special surface that serves
     # as the root console of the whole game. Anything that appears in the
@@ -135,15 +175,36 @@ def game_initialize():
     SURFACE_MAIN = pygame.display.set_mode(
         (constants.CAMERA_WIDTH, constants.CAMERA_HEIGHT))
 
-    # TODO Assign camera object
+    # TODO Load World Map
 
-    # TODO Assign assets object
+    # Assign camera object
+    CAMERA = camera.obj_Camera()
+
+    # Assign assets object
+    ASSETS = assets.obj_Assets()
 
     # The CLOCK tracks and limits cpu cycles
     CLOCK = pygame.time.Clock()
 
     # Random Number Engine
     RANDOM_ENGINE = random.SystemRandom()
+
+
+def game_new():
+
+    global GAME
+
+
+def preferences_save():
+    with gzip.open('data/pref', 'wb') as file:
+        pickle.dump(PREFERENCES, file)
+
+
+def preferences_load():
+    global PREFERENCES
+
+    with gzip.open('data/pref', 'rb') as file:
+        PREFERENCES = pickle.load(file)
 
 
 if __name__ == '__main__':
