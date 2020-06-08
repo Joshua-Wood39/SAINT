@@ -84,7 +84,7 @@ class obj_Spritesheet:
             image = pygame.Surface([width, height]).convert()
 
             # Copy image from sheet onto blank
-            imgae.blit(self.sprite_sheet, (0, 0), (self.tiledict[column] * width + (width * i),
+            image.blit(self.sprite_sheet, (0, 0), (self.tiledict[column] * width + (width * i),
                                                    row * height,
                                                    width,
                                                    height))
